@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+<div>
+    <form action="~/Order/Order/index" method="get">
+        <table class="table table-striped">
+            <tr>
+                <td>訂單查詢</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>訂單編號</td>
+                <td>@Html.TextBox("OrderId")</td>
+            </tr>
+            <tr>
+                <td>客戶名稱</td>
+                <td>@Html.TextBox("CustName")</td>
+            </tr>
+            <tr>
+                <td>負責員工</td>
+                <td>@Html.DropDownList("EmpId", (List<SelectListItem>)ViewBag.Employee_select)</td>
+            </tr>
+            <tr>
+                <td>出貨公司</td>
+                <td>@Html.DropDownList("ShipperId", (List<SelectListItem>)ViewBag.Shipper_select)</td>
+            </tr>
+            <tr>
+                <td>訂購日期</td>
+                <td><input type="date" name="OrderDate" /></td>
+            </tr>
+            <tr>
+                <td>出貨日期</td>
+                <td><input type="date" name="ShippedDate" /></td>
+            </tr>
+            <tr>
+                <td>需要日期</td>
+                <td><input type="date" name="RequiredDate" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="查詢" />
+                    <input type="reset" value="清除" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<hr />
+<div>
+    查詢結果
+    @if (Enumerable.Count(ViewBag.SearchResult) > 0)
+    {
+        <table class="table table-striped">
+            <tr>
+                <td>訂單編號</td>
+                <td>客戶名稱</td>
+                <td>訂購日期</td>
+                <td>發貨日期</td>
+                <td></td>
+                <td></td>
+            </tr>
+            @foreach (var item in (List<ASP_NET.Areas.Order.Models.Order>)ViewBag.SearchResult)
+            {
+                <tr>
+                    <td>@item.OrderId</td>
+                    <td>@item.CustName</td>
+                    <td>@String.Format("{0:yyyy/MM/dd}", item.OrderDate)</td>
+                    <td>@String.Format("{0:yyyy/MM/dd}", item.ShippedDate)</td>
+                    <td>修改</td>
+                    <td>刪除</td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>查無資料</p>
+    }
+</div>
